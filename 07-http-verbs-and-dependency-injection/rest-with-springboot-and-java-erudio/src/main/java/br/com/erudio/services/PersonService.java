@@ -25,7 +25,7 @@ public class PersonService {
     }
 
     public PersonModel findById(String id) {
-        logger.info("Finding one person by id.");
+        logger.info("Finding one person with id " + id);
         var personModel = new PersonModel();
         personModel.setId(counter.incrementAndGet());
         personModel.setFirstName("Leandro");
@@ -33,6 +33,20 @@ public class PersonService {
         personModel.setAddress("Uberlândia - Minas Gerais - Brasil");
         personModel.setGender("Male");
         return personModel;
+    }
+
+    public PersonModel create(PersonModel personModel) {
+        logger.info("Creating one person");
+        return personModel;
+    }
+
+    public PersonModel update(PersonModel personModel) {
+        logger.info("Updating one person");
+        return personModel;
+    }
+
+    public void delete(String id) {
+        logger.info("Deleting one person with id " + id);
     }
 
     private PersonModel mockPerson(int i) {
