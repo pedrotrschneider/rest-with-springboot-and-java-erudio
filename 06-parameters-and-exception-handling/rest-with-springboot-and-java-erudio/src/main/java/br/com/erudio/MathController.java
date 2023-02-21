@@ -1,5 +1,6 @@
 package br.com.erudio;
 
+import br.com.erudio.exceptions.UnsupportedMathOperationException;
 import jakarta.security.auth.message.callback.PrivateKeyCallback;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,9 @@ public class MathController {
     public Double sum(
             @PathVariable(value = "numberOne") String numberOne,
             @PathVariable(value = "numberTwo") String numberTwo
-    ) throws Exception{
+    ) throws UnsupportedMathOperationException {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-            throw new Exception();
+            throw new UnsupportedMathOperationException("Please enter a numeric value.");
         }
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
@@ -28,9 +29,7 @@ public class MathController {
     }
 
     private Double convertToDouble(String strNumber) {
-        if (strNumber == null) return 0D;
         strNumber = strNumber.replaceAll(",", ".");
-        if (isNumeric(strNumber)) return Double.parseDouble(strNumber);
-        return 1D;
+        return Double.parseDouble(strNumber);
     }
 }
