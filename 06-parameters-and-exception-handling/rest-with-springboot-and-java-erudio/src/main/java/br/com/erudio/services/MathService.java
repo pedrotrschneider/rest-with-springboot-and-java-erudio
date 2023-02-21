@@ -1,4 +1,4 @@
-package br.com.erudio;
+package br.com.erudio.services;
 
 import org.springframework.stereotype.Service;
 

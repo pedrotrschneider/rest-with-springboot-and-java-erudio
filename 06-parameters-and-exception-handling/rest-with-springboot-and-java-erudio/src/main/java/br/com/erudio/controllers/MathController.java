@@ -1,5 +1,7 @@
-package br.com.erudio;
+package br.com.erudio.controllers;
 
+import br.com.erudio.services.MathService;
+import br.com.erudio.MathUtil;
 import br.com.erudio.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.*;
 
