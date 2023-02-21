@@ -20,7 +20,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public PersonModel findById(@PathVariable(value = "id") String id) {
+    public PersonModel findById(@PathVariable(value = "id") Long id) {
         return personService.findById(id);
     }
 
@@ -35,7 +35,7 @@ public class PersonController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable(value = "id") String id) {
+    public void delete(@PathVariable(value = "id") Long id) {
         personService.delete(id);
     }
 }
