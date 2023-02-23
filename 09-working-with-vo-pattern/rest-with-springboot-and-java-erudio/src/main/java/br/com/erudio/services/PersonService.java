@@ -6,6 +6,7 @@ import br.com.erudio.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Service
@@ -16,7 +17,7 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<PersonVOVO> findAll() {
+    public List<PersonVO> findAll() {
         logger.info("Finding all people");
         return personRepository.findAll();
     }
