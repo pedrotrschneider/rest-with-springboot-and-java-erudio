@@ -2,6 +2,8 @@ package br.com.erudio.services;
 
 import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.exceptions.ResourceNotFoundException;
+import br.com.erudio.mapper.DozerMapper;
+import br.com.erudio.models.PersonModel;
 import br.com.erudio.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,18 +21,20 @@ public class PersonService {
 
     public List<PersonVO> findAll() {
         logger.info("Finding all people");
-        return personRepository.findAll();
+        return DozerMapper.parseList(personRepository.findAll(), PersonVO.class);
     }
 
     public PersonVO findById(Long id) {
         logger.info("Finding one person with id " + id);
-        return personRepository.findById(id)
+        var entity = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for id " + id));
+        return DozerMapper.parseObject(entity, PersonVO.class);
     }
 
     public PersonVO create(PersonVO personVO) {
         logger.info("Creating one person");
-        return personRepository.save(personVO);
+        var personModel = DozerMapper.parseObject(personVO, PersonModel.class);
+        return DozerMapper.parseObject(personRepository.save(personModel), PersonVO.class);
     }
 
     public PersonVO update(PersonVO personVO) {
@@ -42,13 +46,14 @@ public class PersonService {
         updatePersonVO.setLastName(personVO.getLastName());
         updatePersonVO.setGender(personVO.getGender());
         updatePersonVO.setAddress(personVO.getAddress());
-        return personRepository.save(updatePersonVO);
+        var updatePersonModel = DozerMapper.parseObject(updatePersonVO, PersonModel.class);
+        return DozerMapper.parseObject(personRepository.save(updatePersonModel), PersonVO.class);
     }
 
     public void delete(Long id) {
         logger.info("Deleting one person with id " + id);
-        var personVO = personRepository.findById(id)
+        var personModel = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for id " + id));
-        personRepository.delete(personVO);
+        personRepository.delete(personModel);
     }
 }
