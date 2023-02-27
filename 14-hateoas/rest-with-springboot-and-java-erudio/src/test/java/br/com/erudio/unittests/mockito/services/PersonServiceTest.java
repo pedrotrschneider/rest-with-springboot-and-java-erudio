@@ -39,7 +39,23 @@ class PersonServiceTest {
 
     @Test
     void findAll() {
-        fail("Not yet implemented");
+        var entityList = input.mockEntityList();
+
+        when(personRepository.findAll()).thenReturn(entityList);
+
+        var result = personService.findAll();
+        assertNotNull(result);
+        assertEquals(14, result.size());
+        for (int i = 0; i < result.size(); i++) {
+            var person = result.get(i);
+            assertNotNull(person.getKey());
+            assertNotNull(person.getLinks());
+            assertTrue(person.toString().contains("links: [</api/v1/person/" + i + ">;rel=\"self\"]"));
+            assertEquals("First Name Test" + i, person.getFirstName());
+            assertEquals("Last Name Test" + i, person.getLastName());
+            assertEquals("Address Test" + i, person.getAddress());
+            assertEquals((i % 2 == 0) ? "Male" : "Female", person.getGender());
+        }
     }
 
     @Test
