@@ -24,6 +24,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+    // GET ALL Operation
     @GetMapping(produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML })
     @Operation(
             summary = "Finds all people registered on the database.",
@@ -46,6 +47,8 @@ public class PersonController {
         return personService.findAll();
     }
 
+    // GET ONE Operation
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(
             value = "/{id}",
             produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML }
@@ -69,6 +72,8 @@ public class PersonController {
         return personService.findById(id);
     }
 
+    // CREATE ONE Operation
+    @CrossOrigin(origins = {"http://localhost:8080", "https://erudio.com.br"})
     @PostMapping(
             consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML },
             produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML }
@@ -90,6 +95,7 @@ public class PersonController {
         return personService.create(personVO);
     }
 
+    // UPDATE ONE Operation
     @PutMapping(
             consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML },
             produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML }
@@ -112,6 +118,7 @@ public class PersonController {
         return personService.update(personVO);
     }
 
+    // DELETE ONE Operation
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Deletes a person by their ID.",
