@@ -48,7 +48,6 @@ public class PersonController {
     }
 
     // GET ONE Operation
-    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(
             value = "/{id}",
             produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML }
@@ -73,7 +72,6 @@ public class PersonController {
     }
 
     // CREATE ONE Operation
-    @CrossOrigin(origins = {"http://localhost:8080", "https://erudio.com.br"})
     @PostMapping(
             consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML },
             produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML }
