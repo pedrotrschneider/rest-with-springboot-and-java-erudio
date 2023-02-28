@@ -10,4 +10,9 @@ public class TestConfigs {
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String CONTENT_TYPE_XML = "application/xml";
     public static final String CONTENT_TYPE_YAML = "application/x-yaml";
+
+    public static final String ORIGIN_LOCALHOST_8080 = "http://localhost:8080";
+    public static final String ORIGIN_LOCALHOST_300 = "http://localhost:3000";
+    public static final String ORIGIN_ERUDIO = "https://erudio.com.br";
+    public static final String ORIGIN_SEMERU = "https://semeru.com.br";
 }
