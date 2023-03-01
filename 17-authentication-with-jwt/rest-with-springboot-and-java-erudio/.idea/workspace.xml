@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4593647f-bcff-4831-bcf8-121edcb9dca8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/erudio/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/erudio/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/erudio/services/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/erudio/Startup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/erudio/Startup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/erudio/configs/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/erudio/configs/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/erudio/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/erudio/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/erudio/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/erudio/repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/erudio/security/jwt/JwtConfigurer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/erudio/security/jwt/JwtConfigurer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V8__Insert_Data_In_Users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V8__Insert_Data_In_Users.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,5 +133,15 @@
       <updated>1676988248763</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.hibernate.query.sqm.UnknownEntityException" package="org.hibernate.query.sqm" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

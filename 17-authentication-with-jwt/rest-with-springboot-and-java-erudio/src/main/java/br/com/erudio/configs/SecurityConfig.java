@@ -33,7 +33,9 @@ public class SecurityConfig {
         var pbkdf2Encoder = new Pbkdf2PasswordEncoder("", 8, 185000,
                 SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
         encoders.put("pbkdf2", pbkdf2Encoder);
-        return new DelegatingPasswordEncoder("pbkdf2", encoders);
+        var passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
+        passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
+        return passwordEncoder;
     }
 
     @Bean

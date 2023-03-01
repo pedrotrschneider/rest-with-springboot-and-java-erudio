@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,17 +15,17 @@ public class Startup {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Startup.class, args);
+	}
 
+	public void getHashFromPassword(String password) {
 		Map<String, PasswordEncoder> encoders = new HashMap<>();
-		var pbkdf2Encoder = new Pbkdf2PasswordEncoder("", 8, 185000,
-				Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
+		Pbkdf2PasswordEncoder pbkdf2Encoder = new Pbkdf2PasswordEncoder("", 8, 185000,
+				SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
+
 		encoders.put("pbkdf2", pbkdf2Encoder);
-		var passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
+		DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
 		passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
 
-		String result1 = passwordEncoder.encode("admin123");
-		String result2 = passwordEncoder.encode("admin234");
-		System.out.println("Result 1: " + result1);
-		System.out.println("Result 2: " + result2);
+		System.out.println(passwordEncoder.encode(password));
 	}
 }
