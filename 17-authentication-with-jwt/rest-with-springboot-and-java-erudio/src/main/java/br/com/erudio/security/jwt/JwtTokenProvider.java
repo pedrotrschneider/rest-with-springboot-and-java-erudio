@@ -1,9 +1,8 @@
-package br.com.erudio.securityJwt;
+package br.com.erudio.security.jwt;
 
 import br.com.erudio.data.vo.v1.security.TokenVO;
 import br.com.erudio.exceptions.InvalidJwtAuthenticationException;
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
@@ -16,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.net.ssl.SSLPeerUnverifiedException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +85,7 @@ public class JwtTokenProvider {
         return verifier.verify(token);
     }
 
-    private String resolveToken(HttpServletRequest request) {
+    public String resolveToken(HttpServletRequest request) {
         var bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring("Bearer ".length());
