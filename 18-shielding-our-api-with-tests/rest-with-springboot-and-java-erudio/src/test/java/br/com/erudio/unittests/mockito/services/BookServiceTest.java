@@ -129,7 +129,7 @@ class BookServiceTest {
         assertNotNull(result.getLinks());
         assertTrue(result.toString().contains("links: [</api/v1/book/1>;rel=\"self\"]"));
         assertEquals("Author Test1", result.getAuthor());
-        assertEquals(new Date(100), result.getLaunchDate());
+        assertEquals(new Date(10000), result.getLaunchDate());
         assertEquals(Double.valueOf(10), result.getPrice());
         assertEquals("Title Test1", result.getTitle());
     }
