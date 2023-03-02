@@ -43,8 +43,19 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds); // Date that the token is going to expire
         var accessToken = getAccessToken(username, roles, now, validity);
-        var refreshToken = refreshToken(username, roles, now);
+        var refreshToken = getRefreshToken(username, roles, now);
         return new TokenVO(username, true, now, validity, accessToken, refreshToken);
+    }
+
+    public TokenVO refreshToken(String refreshToken) {
+        if (refreshToken.contains("Bearer "))
+            refreshToken = refreshToken.substring("Bearer ".length());
+
+        var verifier = JWT.require(algorithm).build();
+        var decodedJwt = verifier.verify(refreshToken);
+        var username = decodedJwt.getSubject();
+        var roles = decodedJwt.getClaim("roles").asList(String.class);
+        return createAccessToken(username, roles);
     }
 
     private String getAccessToken(String username, List<String> roles, Date now, Date validity) {
@@ -62,7 +73,7 @@ public class JwtTokenProvider {
                 .strip();
     }
 
-    private String refreshToken(String username, List<String> roles, Date now) {
+    private String getRefreshToken(String username, List<String> roles, Date now) {
         var validityRefreshToken = new Date(now.getTime() + (validityInMilliseconds * 3));
         return JWT.create()
                 .withClaim("roles", roles)
