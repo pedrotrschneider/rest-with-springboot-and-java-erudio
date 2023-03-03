@@ -15,6 +15,9 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
@@ -160,6 +163,72 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         assertEquals("Piquet Souto Maior", createdPersonVO.getLastName());
         assertEquals("Brasilia - Brazil", createdPersonVO.getAddress());
         assertEquals("Male", createdPersonVO.getGender());
+    }
+
+    @Test
+    @Order(4)
+    void testDelete() throws JsonProcessingException {
+        given()
+                .spec(requestSpecification)
+                .pathParams("id", personVO.getId())
+                .when()
+                    .delete("{id}")
+                .then()
+                    .statusCode(204);
+    }
+
+    @Test
+    @Order(5)
+    void testFindAll() throws JsonProcessingException {
+        var content = given()
+                .spec(requestSpecification)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .body(personVO)
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                .extract()
+                    .body()
+                        .asString();
+
+        var people = objectMapper.readValue(content, new TypeReference<List<PersonVO>>() {});
+        var foundPersonVO = people.get(0);
+        personVO = foundPersonVO;
+
+        assertNotNull(foundPersonVO.getId());
+        assertNotNull(foundPersonVO.getFirstName());
+        assertNotNull(foundPersonVO.getLastName());
+        assertNotNull(foundPersonVO.getAddress());
+        assertNotNull(foundPersonVO.getGender());
+        assertEquals(3, foundPersonVO.getId());
+        assertEquals("Leonardo", foundPersonVO.getFirstName());
+        assertEquals("daVinci", foundPersonVO.getLastName());
+        assertEquals("Anchiano - Italy", foundPersonVO.getAddress());
+        assertEquals("Male", foundPersonVO.getGender());
+    }
+
+    @Test
+    @Order(6)
+    void testFindAllWithoutToken() throws JsonProcessingException {
+        var specificationWithoutToken = new RequestSpecBuilder()
+                .setBasePath("/api/v1/person")
+                .setPort(TestConfigs.SERVER_PORT)
+                .addFilter(new RequestLoggingFilter(LogDetail.ALL))
+                .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
+                .build();
+
+        given()
+                .spec(specificationWithoutToken)
+                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .body(personVO)
+                .when()
+                .get()
+                .then()
+                .statusCode(403)
+                .extract()
+                .body()
+                .asString();
     }
 
     private void mockPerson() {
