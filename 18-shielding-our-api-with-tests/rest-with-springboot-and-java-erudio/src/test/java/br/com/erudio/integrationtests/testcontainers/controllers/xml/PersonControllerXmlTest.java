@@ -1,4 +1,4 @@
-package br.com.erudio.integrationtests.testcontainers.controllers.json;
+package br.com.erudio.integrationtests.testcontainers.controllers.xml;
 
 import br.com.erudio.configs.TestConfigs;
 import br.com.erudio.integrationtests.testcontainers.AbstractIntegrationTest;
@@ -6,6 +6,7 @@ import br.com.erudio.integrationtests.vo.AccountCredentialsVO;
 import br.com.erudio.integrationtests.vo.PersonVO;
 import br.com.erudio.integrationtests.vo.TokenVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
@@ -15,7 +16,6 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PersonControllerJsonTest extends AbstractIntegrationTest {
+public class PersonControllerXmlTest extends AbstractIntegrationTest {
 
     private static RequestSpecification requestSpecification;
     private static ObjectMapper objectMapper;
@@ -46,7 +46,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
         var accessToken = given()
                 .basePath("/auth/signin")
                 .port(TestConfigs.SERVER_PORT)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .body(user)
                 .when()
                     .post()
@@ -72,7 +72,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
         var content = given()
                 .spec(requestSpecification)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .body(personVO)
                 .when()
                     .post()
@@ -105,7 +105,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
         var content = given()
                 .spec(requestSpecification)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .body(personVO)
                 .when()
                     .put()
@@ -138,7 +138,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
         var content = given()
                 .spec(requestSpecification)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_ERUDIO)
                 .pathParams("id", personVO.getId())
                 .when()
@@ -182,7 +182,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
     void testFindAll() throws JsonProcessingException {
         var content = given()
                 .spec(requestSpecification)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .body(personVO)
                 .when()
                     .get()
@@ -220,7 +220,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
         given()
                 .spec(specificationWithoutToken)
-                .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .body(personVO)
                 .when()
                     .get()
