@@ -9,12 +9,14 @@ import br.com.erudio.models.PersonModel;
 import br.com.erudio.repositories.PersonRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.logging.Logger;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonService {
@@ -24,11 +26,12 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<PersonVO> findAll() {
+    public Page<PersonVO> findAll(Pageable pageable) {
         logger.info("Finding all people");
-        var people = DozerMapper.parseList(personRepository.findAll(), PersonVO.class);
-        people.stream().forEach(person -> person.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel()));
-        return people;
+        var personPage = personRepository.findAll(pageable);
+        var personVoPage = personPage.map(person -> DozerMapper.parseObject(person, PersonVO.class));
+        personVoPage.map(person -> person.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel()));
+        return personVoPage;
     }
 
     public PersonVO findById(Long id) {
