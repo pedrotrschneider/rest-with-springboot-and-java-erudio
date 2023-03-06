@@ -9,8 +9,10 @@ import br.com.erudio.models.PersonModel;
 import br.com.erudio.repositories.PersonRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
@@ -26,12 +28,18 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public Page<PersonVO> findAll(Pageable pageable) {
+    @Autowired
+    PagedResourcesAssembler<PersonVO> pagedResourcesAssembler;
+
+    public PagedModel<EntityModel<PersonVO>> findAll(Pageable pageable) {
         logger.info("Finding all people");
         var personPage = personRepository.findAll(pageable);
         var personVoPage = personPage.map(person -> DozerMapper.parseObject(person, PersonVO.class));
         personVoPage.map(person -> person.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel()));
-        return personVoPage;
+
+        var link = linkTo(methodOn(PersonController.class)
+                .findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
+        return pagedResourcesAssembler.toModel(personVoPage, link);
     }
 
     public PersonVO findById(Long id) {
