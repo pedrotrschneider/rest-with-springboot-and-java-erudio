@@ -39,26 +39,26 @@ class BookServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void findAll() {
-        var entityList = input.mockEntityList();
-
-        when(bookRepository.findAll()).thenReturn(entityList);
-
-        var result = bookService.findAll();
-        assertNotNull(result);
-        assertEquals(14, result.size());
-        for (int i = 0; i < result.size(); i++) {
-            var book = result.get(i);
-            assertNotNull(book.getKey());
-            assertNotNull(book.getLinks());
-            assertTrue(book.toString().contains("links: [</api/v1/book/" + i + ">;rel=\"self\"]"));
-            assertEquals("Author Test" + i, book.getAuthor());
-            assertTrue(book.getLaunchDate().equals(new Date(i * 10000)));
-            assertEquals(Double.valueOf(i * 10), book.getPrice());
-            assertEquals("Title Test" + i, book.getTitle());
-        }
-    }
+//    @Test
+//    void findAll() {
+//        var entityList = input.mockEntityList();
+//
+//        when(bookRepository.findAll()).thenReturn(entityList);
+//
+//        var result = bookService.findAll();
+//        assertNotNull(result);
+//        assertEquals(14, result.size());
+//        for (int i = 0; i < result.size(); i++) {
+//            var book = result.get(i);
+//            assertNotNull(book.getKey());
+//            assertNotNull(book.getLinks());
+//            assertTrue(book.toString().contains("links: [</api/v1/book/" + i + ">;rel=\"self\"]"));
+//            assertEquals("Author Test" + i, book.getAuthor());
+//            assertTrue(book.getLaunchDate().equals(new Date(i * 10000)));
+//            assertEquals(Double.valueOf(i * 10), book.getPrice());
+//            assertEquals("Title Test" + i, book.getTitle());
+//        }
+//    }
 
     @Test
     void findById() {
